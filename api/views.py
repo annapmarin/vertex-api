@@ -84,3 +84,19 @@ class CreateEventView(APIView):
             serializer.save(created_by=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WelcomeView(APIView):
+    def get(self, request):
+        return Response({
+            "name": "Vertex API",
+            "description": "API per gestionar esdeveniments artístics femenins",
+            "version": "1.0.0",
+            "endpoints": {
+                "register": "/api/register/ (POST)",
+                "login": "/api/login/ (POST)",
+                "events": "/api/events/ (GET)",
+                "event-detail": "/api/events/<id>/ (GET)",
+                "create_artist": "/api/artists/ (POST)",
+                "create_event": "/api/events/create/ (POST)",
+            }
+        })
