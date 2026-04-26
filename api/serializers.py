@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import Artist, Event
 
 class RegisterSerializer(serializers.ModelSerializer):
     # write_only=True: La contrasenya només es pot enviar (en el registre),
@@ -19,3 +20,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+class ArtistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artist
+        fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+    artist = ArtistSerializer(read_only=True)
+    class Meta:
+        model = Event
+        fields = '__all__'

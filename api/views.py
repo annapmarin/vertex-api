@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, ArtistSerializer, EventSerializer
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+from .models import Artist, Event
 
 class RegisterView(APIView):
     def post(self, request):
@@ -38,3 +39,21 @@ class LoginView(APIView):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         })
+
+class EventListView(APIView):
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+class EventDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            event = Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            return Response(
+                {'error': 'L\'esdeveniment no existeix'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
