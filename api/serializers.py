@@ -28,6 +28,9 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     artist = ArtistSerializer(read_only=True)
+    artist_id = serializers.PrimaryKeyRelatedField(
+        queryset=Artist.objects.all(), source='artist', write_only=True
+    )
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'category', 'date', 'location', 'artist', 'artist_id']
