@@ -34,6 +34,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app
-            docker compose down
+            docker-compose down
             docker pull ${{ secrets.DOCKER_USERNAME }}/vertex-api:latest
-            docker compose up -d
+            docker-compose up -d
