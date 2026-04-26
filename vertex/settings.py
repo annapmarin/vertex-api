@@ -17,6 +17,8 @@ import pymysql
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# PyMySQL per compatibilitat amb MySQLdb
+pymysql.install_as_MySQLdb()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -83,11 +85,10 @@ REST_FRAMEWORK = {
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-pymysql.install_as_MySQLdb()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.mysql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB_NAME', 'vertex_db'),
         'USER': os.getenv('DB_USER', 'anna'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'anna'),
